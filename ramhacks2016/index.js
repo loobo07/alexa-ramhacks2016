@@ -70,14 +70,10 @@ exports.handler = function(event, context, callback){
 };
 
 function onIntent(intentRequest, session, callback){
-    var intent = intentRequest.intent, 
-        intentName = intentRequest.intent.name
-
-    if('LaunchRequest' === intentName){
+    var intent = intentRequest.intent.slot.City.value;
+	if ("AMAZON.US_CITY".includes(intent)){
+        this.emit(':tell', getResponse(intent));
+    } else {
         this.emit('SayForcast');
-    } else if ('FastForcastIntent' === intentName) {
-        this.emit('SayForcast');
-    } else if ('SayForcast' === intentName){
-        this.emit(':tell', getResponse());
-    }
+    } 
 }
