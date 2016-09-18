@@ -9,7 +9,7 @@ var Alexa = require('alexa-sdk');
  */
 var relativeWeather = ["cold", "chilly", "cool", "warm", "hot"];
 var apiStr = "";
-var CARD_TITLE = "Forcast";
+var CARD_TITLE = "Forecast";
 
 function getTemp(city) {
     //var url = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&APPID=b280819425992bbd289902c6fbf2ce55";
@@ -58,24 +58,26 @@ function getResponse() {
 // etc.) The JSON body of the request is provided in the event parameter.
 
 exports.handler = function(event, context, callback){
+	if (event.request.type === "IntentRequest") {
+		onIntent(event.request, event.session,
+			function callback(sessionAttributes, speechletResponse) {
+                    context.succeed(buildResponse(sessionAttributes, speechletResponse));
+                });
+	}
     var alexa = Alexa.handler(event, context);
     alexa.registerHandlers(handlers);
     alexa.execute();
 };
 
 function onIntent(intentRequest, session, callback){
-    var intent = intentRequest.intent,
+    var intent = intentRequest.intent, 
         intentName = intentRequest.intent.name
 
-    var handlers = {
-        'LaunchRequest': function () {
-            this.emit('SayForcast');
-        },
-        'FastForcastIntent': function () {
-            this.emit('SayForcast');
-        },
-        'SayForcast': function () {
-            this.emit(':tell', getResponse());
-        }
-    };
+    if('LaunchRequest' === intentName){
+        this.emit('SayForcast');
+    } else if ('FastForcastIntent' === intentName) {
+        this.emit('SayForcast');
+    } else if ('SayForcast' === intentName){
+        this.emit(':tell', getResponse());
+    }
 }
