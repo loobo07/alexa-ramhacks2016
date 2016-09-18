@@ -1,0 +1,23 @@
+{
+  "name": "FastForecast",
+  "version": "1.0.0",
+  "description": "Fast Weather forecast",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loobo07/ramhacks2016.git"
+  },
+  "keywords": [
+    "helloworld",
+    "alexa",
+    "skill"
+  ],
+  "author": "SQUAD",
+  "dependencies": {
+    "alexa-sdk": "1.0.6",
+    "jquery": "3.1.0"
+  }
+}
